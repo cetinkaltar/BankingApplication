@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bank</title>
+
+    <style>
+        th, td {
+            padding: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/menu"></th:block>
+
+<form th:action="@{/statement}" th:object="${accountStatementForm}" method="POST">
+    <table>
+
+        <tr>
+            <td> Bank Account Id</td>
+            <td><input type="text" th:field="*{accountId}"/></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type="submit" value="view"/></td>
+        </tr>
+    </table>
+</form>
+
+<table border="1">
+    <div th:if="${account!=null}">
+        <h2>Account</h2>
+        <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Balance</th>
+        </tr>
+        <tr>
+            <td th:utext="${account.id}">..</td>
+            <td th:utext="${account.fullName}">..</td>
+            <td th:utext="${account.balance}">..</td>
+        </tr>
+    </div>
+</table>
+
+<table border="1">
+    <div th:if="${account!=null && account.transactions.size()>0}">
+        <h2>Transactions</h2>
+        <tr>
+            <th>Amount($)</th>
+            <th>Way</th>
+            <th>Reciever Account</th>
+            <th>Sender Account</th>
+            <th>Date</th>
+        </tr>
+        <tr th:each="transaction : ${account.transactions}">
+
+            <td th:utext="${transaction.amount}">..</td>
+            <td th:utext="${transaction.way}">..</td>
+            <td th:utext="${transaction.receiver}">..</td>
+            <td th:utext="${transaction.sender}">..</td>
+            <td th:utext="${transaction.transferTime}">..</td>
+        </tr>
+    </div>
+</table>
+
+</body>
+</html>
